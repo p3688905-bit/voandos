@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影視聲音設計指南：V.O. vs O.S.</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Sans TC (內文) & Courier Prime (劇本字體) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Courier+Prime&display=swap" rel="stylesheet">
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        script: ['"Courier Prime"', 'monospace'],
+                    },
+                    colors: {
+                        cinema: {
+                            900: '#0f172a', // 深藍黑底色
+                            800: '#1e293b',
+                            700: '#334155',
+                            accent: '#f59e0b', // 電影感的琥珀金
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+        /* 隱藏捲軸但可滾動 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* 互動卡片翻轉效果 */
+        .flip-card { perspective: 1000px; height: 350px;}
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: left; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1rem; padding: 2rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); }
+        .flip-card-front { background-color: #1e293b; border-top: 4px solid #f59e0b; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;}
+        .flip-card-back { background-color: #334155; transform: rotateY(180deg); overflow-y: auto; }
+    </style>
+</head>
+<body class="antialiased selection:bg-cinema-accent selection:text-white pb-20">
+
+    <!-- Hero Section -->
+    <header class="relative pt-20 pb-12 text-center overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-20 flex justify-center items-center">
+            <i class="fa-solid fa-film text-[20rem] text-slate-600 rotate-12"></i>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-wider text-white">
+                <span class="text-cinema-accent">影視聲音設計</span>與劇本寫作指南
+            </h1>
+            <p class="text-xl text-slate-300 font-light mb-6">
+                旁白 (Voice-Over) 與 畫外音 (Off-Screen) 完全解析
+            </p>
+            <div class="inline-block bg-slate-800/80 backdrop-blur-sm p-4 rounded-xl border border-slate-700 text-left max-w-2xl text-slate-300">
+                <p class="mb-2"><i class="fa-solid fa-lightbulb text-cinema-accent mr-2"></i><strong>核心概念：敘事時空 (Diegesis)</strong></p>
+                <p class="text-sm">這個聲音，存不存在於畫面中角色當下身處的物理時空裡？這是區分兩者的最大關鍵。</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 核心定義：互動翻轉卡片 -->
+    <section class="max-w-5xl mx-auto px-6 py-12">
+        <h2 class="text-2xl font-bold mb-8 flex items-center border-b border-slate-700 pb-2">
+            <i class="fa-solid fa-ear-listen mr-3 text-cinema-accent"></i> 核心定義 (點擊卡片翻轉查看細節)
+        </h2>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- VO Card -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fa-solid fa-microphone-lines text-5xl text-cinema-accent mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2">旁白</h3>
+                        <p class="text-xl text-slate-400 font-script">Voice-Over (V.O.)</p>
+                        <p class="mt-6 text-sm text-slate-500 rounded-full bg-slate-800 px-4 py-1"><i class="fa-solid fa-hand-pointer mr-2"></i>點擊翻轉</p>
+                    </div>
+                    <div class="flip-card-back no-scrollbar">
+                        <h3 class="text-2xl font-bold text-cinema-accent mb-3 border-b border-slate-600 pb-2">旁白 (V.O.)</h3>
+                        <ul class="space-y-3 text-slate-200">
+                            <li><i class="fa-solid fa-check text-green-400 w-5"></i> <strong>非敘事時空聲音</strong> (Non-diegetic)</li>
+                            <li><i class="fa-solid fa-check text-green-400 w-5"></i> 說話者 <strong>不在</strong> 當下物理空間內。</li>
+                            <li><i class="fa-solid fa-check text-green-400 w-5"></i> 畫面中的角色 <strong>聽不到</strong>。</li>
+                        </ul>
+                        <div class="mt-4 pt-4 border-t border-slate-600">
+                            <h4 class="font-bold text-sm text-slate-400 mb-2">主要功能：</h4>
+                            <p class="text-sm">交代背景壓縮時間、展現內心獨白、打破第四面牆直接與觀眾對話。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OS Card -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <i class="fa-solid fa-walkie-talkie text-5xl text-cinema-accent mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-2">畫外音</h3>
+                        <p class="text-xl text-slate-400 font-script">Off-Screen (O.S.)</p>
+                        <p class="mt-6 text-sm text-slate-500 rounded-full bg-slate-800 px-4 py-1"><i class="fa-solid fa-hand-pointer mr-2"></i>點擊翻轉</p>
+                    </div>
+                    <div class="flip-card-back no-scrollbar">
+                        <h3 class="text-2xl font-bold text-cinema-accent mb-3 border-b border-slate-600 pb-2">畫外音 (O.S.)</h3>
+                        <ul class="space-y-3 text-slate-200">
+                            <li><i class="fa-solid fa-check text-green-400 w-5"></i> <strong>敘事時空聲音</strong> (Diegetic)</li>
+                            <li><i class="fa-solid fa-check text-green-400 w-5"></i> 說話者 <strong>就在現場</strong>，只是沒入鏡。</li>
+                            <li><i class="fa-solid fa-check text-green-400 w-5"></i> 畫面中的角色 <strong>聽得到</strong> 並能反應。</li>
+                        </ul>
+                        <div class="mt-4 pt-4 border-t border-slate-600">
+                            <h4 class="font-bold text-sm text-slate-400 mb-2">主要功能：</h4>
+                            <p class="text-sm">擴展視覺空間營造真實感、引導注意力與製造懸念、維持對話剪輯連貫性。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 經典電影案例 -->
+    <section class="max-w-5xl mx-auto px-6 py-12 bg-slate-800/50 rounded-3xl my-8">
+        <h2 class="text-2xl font-bold mb-8 flex items-center border-b border-slate-700 pb-2">
+            <i class="fa-solid fa-clapperboard mr-3 text-cinema-accent"></i> 經典電影案例
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- VO examples -->
+            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-cinema-accent transition">
+                <span class="bg-blue-900 text-blue-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">V.O. 案例</span>
+                <h4 class="text-lg font-bold mb-1">《刺激1995》</h4>
+                <p class="text-sm text-slate-400 mb-3">The Shawshank Redemption (1994)</p>
+                <p class="text-sm">配角瑞德以「過來人」的全知視角，娓娓道來安迪在監獄裡的幾十年歲月。畫面中的安迪聽不到解說，完美示範 V.O. 如何壓縮時間。</p>
+            </div>
+            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-cinema-accent transition">
+                <span class="bg-blue-900 text-blue-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">V.O. 案例</span>
+                <h4 class="text-lg font-bold mb-1">《鬥陣俱樂部》</h4>
+                <p class="text-sm text-slate-400 mb-3">Fight Club (1999)</p>
+                <p class="text-sm">主角充滿諷刺與神經質的內心碎碎念，帶領觀眾進入他失眠、分裂的內心世界。典型的「不可靠敘事者」獨白。</p>
+            </div>
+            <!-- OS examples -->
+            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-cinema-accent transition">
+                <span class="bg-green-900 text-green-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">O.S. 案例</span>
+                <h4 class="text-lg font-bold mb-1">《驚魂記》</h4>
+                <p class="text-sm text-slate-400 mb-3">Psycho (1960)</p>
+                <p class="text-sm">諾曼在客廳時，我們聽到他母親從樓上傳來的責罵聲。攝影機只拍諾曼，但母親的聲音 (O.S.) 真實存在，極大增加了懸疑感。</p>
+            </div>
+            <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 hover:border-cinema-accent transition">
+                <span class="bg-green-900 text-green-200 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">O.S. 案例</span>
+                <h4 class="text-lg font-bold mb-1">《黑色追緝令》</h4>
+                <p class="text-sm text-slate-400 mb-3">Pulp Fiction (1994)</p>
+                <p class="text-sm">文森在客廳，蜜亞在另一房間透過麥克風對他說話。畫面上只有文森，但聲音透過系統傳出 (O.S.)，兩人可互相對話互動。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 劇本排版檢視器 -->
+    <section class="max-w-5xl mx-auto px-6 py-12">
+        <h2 class="text-2xl font-bold mb-6 flex items-center border-b border-slate-700 pb-2">
+            <i class="fa-solid fa-file-lines mr-3 text-cinema-accent"></i> 劇本排版格式 (向左對齊版)
+        </h2>
+        
+        <div class="bg-slate-200 text-slate-900 rounded-xl overflow-hidden shadow-2xl">
+            <!-- 視窗控制列 -->
+            <div class="bg-slate-300 px-4 py-3 flex justify-between items-center border-b border-slate-400">
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="showScript('vo')" id="btn-vo" class="px-3 py-1 bg-cinema-800 text-white text-xs rounded shadow transition font-bold">查看 V.O. 範例</button>
+                    <button onclick="showScript('os')" id="btn-os" class="px-3 py-1 bg-slate-400 text-slate-800 text-xs rounded hover:bg-slate-500 transition font-bold">查看 O.S. 範例</button>
+                </div>
+            </div>
+            
+            <!-- 劇本內容區 (使用等寬字體模擬) -->
+            <div class="p-8 font-script text-sm md:text-base leading-relaxed bg-white h-[350px] overflow-y-auto">
+                <div id="script-vo" class="block">
+<span class="text-slate-400 block mb-4">/* 場景：表現角色的內心世界或跨時空的敘述。 */</span>
+△ 操場上，夕陽西下。
+△ 17歲的林柏宇獨自坐在司令台上，看著空蕩蕩的球場，神情落寞。
+
+<span class="font-bold">林柏宇 (V.O.)</span>
+那一年夏天，我還不知道，這是我最後一次穿上這身制服。如果當時我勇敢一點...
+
+<br><br>
+<span class="text-xs text-slate-500 bg-slate-100 p-2 rounded block">
+(實務註解：現場拍攝時，演員只需表演落寞神情，不需開口。這段台詞是後期進錄音室配音，呈現乾淨貼耳的質感。)
+</span>
+                </div>
+                
+                <div id="script-os" class="hidden">
+<span class="text-slate-400 block mb-4">/* 場景：角色在同一個時空，但攝影機沒有拍到他說話。 */</span>
+內景. 林柏宇家客廳 - 晚
+
+△ 攝影機特寫林柏宇，他正坐在沙發上，聚精會神地打著電動。
+△ 廚房傳來炒菜的聲音。
+
+<span class="font-bold">媽媽 (O.S.)</span>
+柏宇！別再打電動了，出來端菜！
+
+△ 柏宇皺了皺眉頭，眼睛依然盯著螢幕。
+
+<span class="font-bold">林柏宇</span>
+好啦！等一下，我這關快過了！
+
+<br><br>
+<span class="text-xs text-slate-500 bg-slate-100 p-2 rounded block">
+(實務註解：現場拍攝時，飾演媽媽的演員可能站在鏡頭外幫忙對詞。後期混音會加上廚房的空間殘響(Reverb)，營造距離感。)
+</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 總結對比表 -->
+    <section class="max-w-5xl mx-auto px-6 py-6">
+        <div class="overflow-x-auto rounded-xl border border-slate-700 shadow-lg">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-cinema-700 text-white">
+                        <th class="p-4 border-b border-slate-600">比較維度</th>
+                        <th class="p-4 border-b border-slate-600 border-l">旁白 (V.O.)</th>
+                        <th class="p-4 border-b border-slate-600 border-l">畫外音 (O.S.)</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-300">
+                    <tr class="bg-slate-800 hover:bg-slate-700/50 transition">
+                        <td class="p-4 border-b border-slate-700 font-bold text-white">時空屬性</td>
+                        <td class="p-4 border-b border-slate-700 border-l">畫面時空<strong>之外</strong> (Non-diegetic)</td>
+                        <td class="p-4 border-b border-slate-700 border-l">畫面時空<strong>之內</strong> (Diegetic)</td>
+                    </tr>
+                    <tr class="bg-slate-800 hover:bg-slate-700/50 transition">
+                        <td class="p-4 border-b border-slate-700 font-bold text-white">角色互動</td>
+                        <td class="p-4 border-b border-slate-700 border-l">畫面中的角色 <strong>聽不到</strong></td>
+                        <td class="p-4 border-b border-slate-700 border-l">畫面中的角色 <strong>聽得到</strong></td>
+                    </tr>
+                    <tr class="bg-slate-800 hover:bg-slate-700/50 transition">
+                        <td class="p-4 border-b border-slate-700 font-bold text-white">後期混音</td>
+                        <td class="p-4 border-b border-slate-700 border-l">聲音乾淨、貼耳，營造內心或權威感</td>
+                        <td class="p-4 border-b border-slate-700 border-l">需帶有環境空間感(Reverb)與方位感(Panning)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 隨堂小測驗 (互動 JS) -->
+    <section class="max-w-5xl mx-auto px-6 py-12">
+        <div class="bg-gradient-to-br from-slate-800 to-cinema-900 p-8 rounded-3xl border border-slate-600 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-10">
+                <i class="fa-solid fa-gamepad text-8xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 relative z-10"><i class="fa-solid fa-clipboard-question text-cinema-accent mr-2"></i> 隨堂挑戰：你分得出來嗎？</h2>
+            <p class="text-slate-400 mb-6 relative z-10">閱讀以下情境，判斷劇本上應該標示 V.O. 還是 O.S.？</p>
+
+            <div id="quiz-container" class="relative z-10 space-y-6">
+                <!-- 題目會由 JS 動態生成 -->
+            </div>
+            
+            <div id="quiz-result" class="hidden mt-6 p-4 bg-green-900/50 border border-green-500 rounded-lg text-green-300 font-bold text-center z-10 relative">
+                🎉 挑戰完成！你已經完全掌握這兩個概念了！
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-slate-500 text-sm border-t border-slate-800 mt-12">
+        <p>專業影視編劇與聲音設計參考指南 | 互動學習版</p>
+    </footer>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // --- 劇本切換邏輯 ---
+        function showScript(type) {
+            const voScript = document.getElementById('script-vo');
+            const osScript = document.getElementById('script-os');
+            const btnVo = document.getElementById('btn-vo');
+            const btnOs = document.getElementById('btn-os');
+
+            if (type === 'vo') {
+                voScript.classList.remove('hidden');
+                voScript.classList.add('block');
+                osScript.classList.remove('block');
+                osScript.classList.add('hidden');
+                
+                btnVo.className = "px-3 py-1 bg-cinema-800 text-white text-xs rounded shadow transition font-bold";
+                btnOs.className = "px-3 py-1 bg-slate-400 text-slate-800 text-xs rounded hover:bg-slate-500 transition font-bold";
+            } else {
+                osScript.classList.remove('hidden');
+                osScript.classList.add('block');
+                voScript.classList.remove('block');
+                voScript.classList.add('hidden');
+                
+                btnOs.className = "px-3 py-1 bg-cinema-800 text-white text-xs rounded shadow transition font-bold";
+                btnVo.className = "px-3 py-1 bg-slate-400 text-slate-800 text-xs rounded hover:bg-slate-500 transition font-bold";
+            }
+        }
+
+        // --- 測驗邏輯 ---
+        const questions = [
+            {
+                id: 1,
+                text: "場景：一對情侶正在客廳吵架，突然聽到臥室裡嬰兒大哭的聲音。",
+                answer: "OS",
+                explanation: "嬰兒在同一個屋簷下（物理時空內），且情侶聽得到，所以是畫外音 (O.S.)。"
+            },
+            {
+                id: 2,
+                text: "場景：男主角走在雨中，畫面沒有說話，但我們聽到他的聲音說：『如果那天我沒有出門就好了。』",
+                answer: "VO",
+                explanation: "這是主角事後的回憶/內心獨白，雨中的他聽不到這句話，所以是旁白 (V.O.)。"
+            },
+            {
+                id: 3,
+                text: "場景：警察在案發現場搜索，對講機裡傳來局長的聲音指示他們撤退。",
+                answer: "OS",
+                explanation: "局長雖然不在畫面內，但他透過對講機與現場警察處於同一個敘事時空中，警察聽得到並會反應，所以是畫外音 (O.S.)。"
+            }
+        ];
+
+        let answeredCount = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            
+            questions.forEach((q, index) => {
+                const item = document.createElement('div');
+                item.className = "bg-slate-800 p-5 rounded-xl border border-slate-700 transition-all";
+                item.id = `q-${q.id}`;
+                
+                item.innerHTML = `
+                    <p class="font-bold text-lg mb-3"><span class="text-cinema-accent">Q${index + 1}:</span> ${q.text}</p>
+                    <div class="flex space-x-3 mb-3" id="btns-${q.id}">
+                        <button onclick="checkAnswer(${q.id}, 'VO')" class="flex-1 py-2 rounded bg-slate-700 hover:bg-blue-600 transition font-bold text-white border border-slate-600">V.O. (旁白)</button>
+                        <button onclick="checkAnswer(${q.id}, 'OS')" class="flex-1 py-2 rounded bg-slate-700 hover:bg-green-600 transition font-bold text-white border border-slate-600">O.S. (畫外音)</button>
+                    </div>
+                    <div id="feedback-${q.id}" class="hidden text-sm p-3 rounded mt-2"></div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function checkAnswer(questionId, userAnswer) {
+            const question = questions.find(q => q.id === questionId);
+            const feedbackDiv = document.getElementById(`feedback-${questionId}`);
+            const btnsDiv = document.getElementById(`btns-${questionId}`);
+            
+            // 隱藏按鈕避免重複點擊
+            btnsDiv.style.opacity = "0.5";
+            btnsDiv.style.pointerEvents = "none";
+            
+            feedbackDiv.classList.remove('hidden');
+            
+            if (userAnswer === question.answer) {
+                feedbackDiv.className = "text-sm p-3 rounded mt-2 bg-green-900/50 text-green-300 border border-green-700";
+                feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i><strong>答對了！</strong> ${question.explanation}`;
+            } else {
+                feedbackDiv.className = "text-sm p-3 rounded mt-2 bg-red-900/50 text-red-300 border border-red-700";
+                feedbackDiv.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2"></i><strong>答錯了。</strong> ${question.explanation}`;
+            }
+
+            answeredCount++;
+            if (answeredCount === questions.length) {
+                setTimeout(() => {
+                    document.getElementById('quiz-result').classList.remove('hidden');
+                }, 500);
+            }
+        }
+
+        // 初始化
+        window.onload = renderQuiz;
+    </script>
+</body>
+</html>
